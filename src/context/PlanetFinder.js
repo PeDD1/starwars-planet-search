@@ -9,14 +9,14 @@ function PlanetFinder({ children }) {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
+    filterByNumericValues: [],
   });
 
   async function fetchPlanetsList() {
     setIsLoading(true);
     const planetsData = await fetchPlanetsAPI();
-    setData(planetsData);
     setFilteredPlanets(planetsData);
+    setData(planetsData);
     setIsLoading(false);
   }
 
@@ -34,38 +34,53 @@ function PlanetFinder({ children }) {
     );
   };
 
+  const removeFilter = (newFilter) => {
+    setFilters({ ...filters, filterByNumericValues: newFilter });
+  };
+
   useEffect(() => {
-    const filtered = data.filter(({ name }) => name.includes(filters.filterByName.name));
+    const filtered = data
+      .filter(({ name }) => name.includes(filters.filterByName.name));
     setFilteredPlanets(filtered);
   }, [filters, data]);
 
   useEffect(() => {
     let filteredByNumbers = '';
-    const { column, comparison, value } = filters
-      .filterByNumericValues[filters.filterByNumericValues.length - 1];
-    switch (comparison) {
-    case 'maior que':
-      filteredByNumbers = data.filter((item) => (
-        parseInt(item[column], 10) > parseInt(value, 10)));
-   break;
-    case 'menor que':
-      filteredByNumbers = data.filter((item) => (
-        parseInt(item[column], 10) < parseInt(value, 10)));
-    break;
-    case 'igual a':
-      filteredByNumbers = data.filter((item) => (
-        parseInt(item[column], 10) === parseInt(value, 10)));
-    break;
-    case '':
-      break;
-    default:
-      break;
+    const { filterByNumericValues } = filters;
+    if (filterByNumericValues.length === 0) {
+      setFilteredPlanets(data);
+    } else {
+      const { column, comparison, value } = (
+        filterByNumericValues[filterByNumericValues.length - 1]);
+
+      switch (comparison) {
+      case 'maior que': filteredByNumbers = filteredPlanets.filter(
+        (item) => (parseInt(item[column], 10) > parseInt(value, 10)),
+      );
+        break;
+      case 'menor que': filteredByNumbers = filteredPlanets.filter(
+        (item) => (parseInt(item[column], 10) < parseInt(value, 10)),
+      );
+        break;
+      case 'igual a': filteredByNumbers = filteredPlanets.filter(
+        (item) => (parseInt(item[column], 10) === parseInt(value, 10)),
+      );
+        break;
+      default:
+        break;
+      }
+      setFilteredPlanets(filteredByNumbers);
     }
-    setFilteredPlanets(filteredByNumbers);
   }, [filters.filterByNumericValues]);
 
   const contextValue = {
-    data, isLoading, filteredPlanets, setNameFilterText, getNumericFilters, filters
+    data,
+    isLoading,
+    filteredPlanets,
+    setNameFilterText,
+    getNumericFilters,
+    filters,
+    removeFilter,
   };
   
   return (
