@@ -5,6 +5,8 @@ import PlanetContext from '../context/PlanetContext';
 function Table() {
   const { data, isLoading, filteredPlanets } = useContext(PlanetContext);
 
+  const PLANET_INFO_LENGTH = 13;
+
   return (
     <div>
       {!isLoading && (
@@ -20,11 +22,15 @@ function Table() {
           <tbody>
           {filteredPlanets.map((planetInfo, index) => (
               <tr key={ index }>
-                {Object.values(planetInfo).map((info, indexInfo) => (
-                  <td key={ indexInfo }>
-                    {info}
-                  </td>
-                ))}
+                <td key={ planetInfo.name } data-testid="planet-name">
+                  {planetInfo.name}
+                </td>
+                {Object.values(planetInfo)
+                  .slice(1, PLANET_INFO_LENGTH).map((info, indexInfo) => (
+                    <td key={ indexInfo }>
+                      {info}
+                    </td>
+                  ))}
               </tr>))}
           </tbody>
         </table>)}

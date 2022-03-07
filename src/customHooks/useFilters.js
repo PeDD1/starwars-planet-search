@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useFilter = (defaultValue, newValue, typeNewValue) => {
+const useFilters = (defaultValue, newValue, typeNewValue) => {
   const [filter, setFilter] = useState(defaultValue);
 
   useEffect(() => {
@@ -10,4 +10,4 @@ const useFilter = (defaultValue, newValue, typeNewValue) => {
   return filter;
 };
 
-export default useFilter;
+export default useFilters;

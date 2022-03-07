@@ -10,6 +10,7 @@ function PlanetFinder({ children }) {
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
     filterByNumericValues: [],
+    order: { column: 'name', sort: 'ASC' },
   });
 
   async function fetchPlanetsList() {
@@ -34,6 +35,10 @@ function PlanetFinder({ children }) {
     );
   };
 
+  const getSortOrder = (order) => {
+    setFilters({ ...filters, order });
+  };
+  
   const removeFilter = (newFilter) => {
     setFilters({ ...filters, filterByNumericValues: newFilter });
   };
@@ -42,7 +47,7 @@ function PlanetFinder({ children }) {
     const filtered = data
       .filter(({ name }) => name.includes(filters.filterByName.name));
     setFilteredPlanets(filtered);
-  }, [filters, data]);
+  }, [filters.filterByName, data]);
 
   useEffect(() => {
     let filteredByNumbers = '';
@@ -73,12 +78,77 @@ function PlanetFinder({ children }) {
     }
   }, [filters.filterByNumericValues]);
 
+  const switchForText = () => {
+    const { sort, column } = filters.order;
+    const NEGATIVE_INDEX = -1;
+    let sorted = '';
+    switch (sort) {
+    case 'ASC':
+      sorted = filteredPlanets.sort((a, b) => {
+        if (a[column] > b[column]) return 1;
+        if (b[column] > a[column]) return NEGATIVE_INDEX;
+        return 0;
+      });
+      break;
+    case 'DESC':
+      sorted = filteredPlanets.sort((a, b) => {
+        if (a[column] > b[column]) return NEGATIVE_INDEX;
+        if (b[column] > a[column]) return 1;
+        return 0;
+      });
+      break;
+    default:
+      break;
+    }
+    return sorted;
+  };
+
+  const switchForNumber = () => {
+    const { sort, column } = filters.order;
+    const NEGATIVE_INDEX = -1;
+    let sorted = '';
+    switch (sort) {
+    case 'ASC':
+      sorted = filteredPlanets.sort((a, b) => {
+        if (parseInt(a[column], 10) > parseInt(b[column], 10)) return 1;
+        if (parseInt(b[column], 10) > parseInt(a[column], 10)) return NEGATIVE_INDEX;
+        return 0;
+      });
+      break;
+    case 'DESC':
+      sorted = filteredPlanets.sort((a, b) => {
+        if (parseInt(a[column], 10) > parseInt(b[column], 10)) return NEGATIVE_INDEX;
+        if (parseInt(b[column], 10) > parseInt(a[column], 10)) return 1;
+        return 0;
+      });
+      break;
+    default:
+      break;
+    }
+    return sorted;
+  };
+
+  useEffect(() => {
+    const { order } = filters;
+    const { column } = order;
+    let sorted = '';
+    if (isLoading) setFilteredPlanets(filteredPlanets);
+    if (!isLoading) {
+      sorted = (!Number.isNaN(parseInt(filteredPlanets[0][column], 10))
+        ? switchForNumber()
+        : switchForText());
+      setFilteredPlanets(sorted);
+    }
+    setFilters({ ...filters });
+  }, [filters.order, filteredPlanets]);
+
   const contextValue = {
     data,
     isLoading,
     filteredPlanets,
     setNameFilterText,
     getNumericFilters,
+    getSortOrder,
     filters,
     removeFilter,
   };
