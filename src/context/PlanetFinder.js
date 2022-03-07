@@ -9,7 +9,7 @@ function PlanetFinder({ children }) {
   const [filteredPlanets, setFilteredPlanets] = useState([]);
   const [filters, setFilters] = useState({
     filterByName: { name: '' },
-    filterByNumericValues: [{ column: 'population', comparison: 'maior que', value: 0 }],
+    filterByNumericValues: [{ column: '', comparison: '', value: 0 }],
   });
 
   async function fetchPlanetsList() {
@@ -29,30 +29,40 @@ function PlanetFinder({ children }) {
   };
 
   const getNumericFilters = (value) => {
-    setFilters({ ...filters, filterByNumericValues: value });
+    setFilters(
+      { ...filters, filterByNumericValues: [...filters.filterByNumericValues, value] },
+    );
   };
 
   useEffect(() => {
     const filtered = data.filter(({ name }) => name.includes(filters.filterByName.name));
     setFilteredPlanets(filtered);
-  }, [filters]);
+  }, [filters, data]);
 
   useEffect(() => {
     let filteredByNumbers = '';
-    const { column, comparison, value } = filters.filterByNumericValues;
-    console.log(comparison);
-    if (comparison === 'maior que') {
+    const { column, comparison, value } = filters
+      .filterByNumericValues[filters.filterByNumericValues.length - 1];
+    switch (comparison) {
+    case 'maior que':
       filteredByNumbers = data.filter((item) => (
         parseInt(item[column], 10) > parseInt(value, 10)));
-    } else if ((comparison === 'menor que')) {
+   break;
+    case 'menor que':
       filteredByNumbers = data.filter((item) => (
         parseInt(item[column], 10) < parseInt(value, 10)));
-    } else {
+    break;
+    case 'igual a':
       filteredByNumbers = data.filter((item) => (
         parseInt(item[column], 10) === parseInt(value, 10)));
+    break;
+    case '':
+      break;
+    default:
+      break;
     }
     setFilteredPlanets(filteredByNumbers);
-  }, [filters]);
+  }, [filters.filterByNumericValues]);
 
   const contextValue = {
     data, isLoading, filteredPlanets, setNameFilterText, getNumericFilters, filters
