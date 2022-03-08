@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import PlanetContext from '../context/PlanetContext';
+import './Table.css';
 
 function Table() {
   const { data, isLoading, filteredPlanets } = useContext(PlanetContext);

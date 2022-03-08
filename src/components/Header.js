@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PlanetContext from '../context/PlanetContext';
+import logo from '../pictures/logo.png';
+import './Header.css';
+
 
 function Header() {
   const {
@@ -69,70 +72,81 @@ function Header() {
   );
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Filtrar por Nome"
-        data-testid="name-filter"
-        value={ name }
-        onChange={ (ev) => setNameFilterText(ev.target) }
-      />
-      <select data-testid="column-filter" name="column" onChange={ handleChange }>
-        {filterColumnList()}
-      </select>
-      <select data-testid="comparison-filter" name="comparison" onChange={ handleChange }>
-        <option selected value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        name="value"
-        value={ numericFilters.value }
-        type="number"
-        data-testid="value-filter"
-        onChange={ handleChange }
-      />
-      <button
-        type="button"
-        onClick={ handleSubmit }
-        data-testid="button-filter"
-      >
-        Adicionar Filtro
-      </button>
-      <select data-testid="column-sort" name="sort" onChange={ handleChangeColumnSort }>
-        {!isLoading && Object.keys(data[0]).map((element) => (
-          <option key={ element } name="column" value={ element }>
-            {element}
-          </option>))}
-      </select>
-      <div onChange={ handleCheck }>
-        <input
-          type="radio"
-          value="ASC"
-          name="order"
-          checked={ sortOrderList.sort === 'ASC' }
-          data-testid="column-sort-input-asc"
-          // onChange={ handleCheck }
-        />
-        ASC
-        <input
-          type="radio"
-          value="DESC"
-          name="order"
-          data-testid="column-sort-input-desc"
-          checked={ sortOrderList.sort === 'DESC' }
-        />
-        DESC
-      </div>
-      <button
-        type="button"
-        data-testid="column-sort-button"
-        onClick={ handleSubmitOrder }
-      >
-        Ordenar
-      </button>
-      {activeFilter()}
-    </div>
+    <main className="main-header">
+      <img className="logo" alt="StarWars Logo" src={logo} />
+      <div className='filter-container'>
+        <div className='filter-form'>
+          <input
+            className="filter-by-name"
+            type="text"
+            placeholder="Filtrar por Nome"
+            data-testid="name-filter"
+            value={ name }
+            onChange={ (ev) => setNameFilterText(ev.target) }
+            />
+          <div className="filter-details">
+            <div className="filter-by-number">
+              <select data-testid="column-filter" name="column" onChange={ handleChange }>
+                {filterColumnList()}
+              </select>
+              <select data-testid="comparison-filter" name="comparison" onChange={ handleChange }>
+                <option selected value="maior que">maior que</option>
+                <option value="menor que">menor que</option>
+                <option value="igual a">igual a</option>
+              </select>
+              <input
+                name="value"
+                value={ numericFilters.value }
+                type="number"
+                data-testid="value-filter"
+                onChange={ handleChange }
+              />
+              <button
+                type="button"
+                onClick={ handleSubmit }
+                data-testid="button-filter"
+              >
+                Adicionar Filtro
+              </button>
+            </div>
+            <div className="filter-sort">
+              <select data-testid="column-sort" name="sort" onChange={ handleChangeColumnSort }>
+                {!isLoading && Object.keys(data[0]).map((element) => (
+                  <option key={ element } name="column" value={ element }>
+                    {element}
+                  </option>))}
+              </select>
+              <div onChange={ handleCheck }>
+                <input
+                  type="radio"
+                  value="ASC"
+                  name="order"
+                  checked={ sortOrderList.sort === 'ASC' }
+                  data-testid="column-sort-input-asc"
+                />
+                  ASC
+                <input
+                  type="radio"
+                  value="DESC"
+                  name="order"
+                  data-testid="column-sort-input-desc"
+                  checked={ sortOrderList.sort === 'DESC' }
+                />
+                  DESC
+              </div>
+              <button
+                type="button"
+                data-testid="column-sort-button"
+                onClick={ handleSubmitOrder }
+              >
+                Ordenar
+              </button>
+            </div>
+          </div>
+        </div>
+        {activeFilter()}
+      </div>  
+    </main>
   );
 }
 
