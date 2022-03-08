@@ -1,0 +1,34 @@
+.table-container {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: black;
+  padding: 10px;
+}
+
+.table {
+  padding: 10px;
+  text-align: center;
+}
+
+.table thead {
+  background-color: rgba(175, 131, 0, 0.8);
+  border-bottom: 1px solid white;
+}
+
+.table tr:nth-child(even) {
+  background-color: rgba(91, 67, 0, 0.8);
+}
+
+.table tr:hover {
+  background-color: #E8F836;
+}
+
+.list-url {
+  color: black;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-url:hover {
+  color: blue;
+}

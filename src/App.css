@@ -2,9 +2,11 @@
   margin: 0;
 }
 
-body {
+body,
+html {
   background-color: black;
-  background-image: url('./pictures/background.jpeg');
+  background-image: url('./pictures/background.jpg');
+  background-image: absolute;
   height: 100%;
 }
 
