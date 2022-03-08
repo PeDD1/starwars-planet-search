@@ -61,11 +61,17 @@ function Header() {
     <option key={ option } value={ option }>{option}</option>));
 
   const activeFilter = () => (
-    <ul>
+        <ul>
       { filters.filterByNumericValues.map(({ column, comparison, value }, index) => (
         <li key={ index } data-testid="filter">
           {`${column} ${comparison} ${value}`}
-          <button type="button" onClick={ handleClick }>X</button>
+          <button
+            className="del-btn"
+            type="button"
+            onClick={ handleClick }
+          >
+            Apagar
+          </button>
         </li>
       )) }
     </ul>
@@ -105,6 +111,7 @@ function Header() {
                 type="button"
                 onClick={ handleSubmit }
                 data-testid="button-filter"
+                className="add-filter-btn"
               >
                 Adicionar Filtro
               </button>
@@ -143,7 +150,8 @@ function Header() {
               <button
                 type="button"
                 data-testid="column-sort-button"
-                onClick={ handleSubmitOrder }
+                onClick={handleSubmitOrder}
+                className="sort-btn"
               >
                 Ordenar
               </button>
