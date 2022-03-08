@@ -116,24 +116,30 @@ function Header() {
                     {element}
                   </option>))}
               </select>
-              <div onChange={ handleCheck }>
+              <label htmlFor="ASC" className="column-sort-radio">
                 <input
                   type="radio"
                   value="ASC"
                   name="order"
+                  id="ASC"
+                  onChange={ handleCheck }
                   checked={ sortOrderList.sort === 'ASC' }
                   data-testid="column-sort-input-asc"
                 />
-                  ASC
+                ASC
+              </label> 
+              <label htmlFor="DESC" className="column-sort-radio">
                 <input
                   type="radio"
                   value="DESC"
                   name="order"
+                  id="DESC"
+                  onChange={ handleCheck }
                   data-testid="column-sort-input-desc"
                   checked={ sortOrderList.sort === 'DESC' }
                 />
                   DESC
-              </div>
+              </label>
               <button
                 type="button"
                 data-testid="column-sort-button"
