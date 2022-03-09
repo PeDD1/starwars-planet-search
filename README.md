@@ -3,8 +3,10 @@
 
 # Visualização do Projeto
 
-<img height="20%" width="40%" alt="Print do Projeto" src="./src/pictures/project-visualisation.png">
-
+<div align="center">
+ <img align="center" height="40%" width="80%" alt="Print do Projeto" src="./src/pictures/project-visualisation.png">
+</div>
+ 
 ---
 
 # Introdução
