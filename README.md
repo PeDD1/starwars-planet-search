@@ -3,7 +3,7 @@
 
 # Visualização do Projeto
 
-<img alt="Print do Projeto" src="./src/pictures/project-visualisation.png">
+<img height="20%" width="40%" alt="Print do Projeto" src="./src/pictures/project-visualisation.png">
 
 ---
 
