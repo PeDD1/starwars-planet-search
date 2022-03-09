@@ -26,7 +26,7 @@ Neste projeto utilizei as seguintes técnicas:
 ---
 
 - Instale as dependências:
-  * `npm instal`
+  * `npm install`
 
 - Inicialize a aplicação:
   * `npm start`
