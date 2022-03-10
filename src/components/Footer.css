@@ -1,0 +1,15 @@
+.footer-body {
+  background-color: #E8F836;
+  justify-content: center;
+  padding: 1.2%;
+  margin-top: 2%;
+}
+
+.footer-container {
+  text-align: center;
+}
+
+.footer-text {
+  font-size: larger;
+  padding: 0.3%;
+}
